@@ -1,12 +1,16 @@
-﻿using Pacagroup.Ecommerce.Domain.Entity;
-using Pacagroup.Ecommerce.Domain.Interface;
-using Pacagroup.Ecommerce.Infraestructure.Interface;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
+﻿
 namespace Pacagroup.Ecommerce.Domain.Core
 {
+    using Pacagroup.Ecommerce.Domain.Entity;
+    using Pacagroup.Ecommerce.Domain.Interface;
+    using Pacagroup.Ecommerce.Infraestructure.Interface;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class CustomersDomain : ICustomersDomain
     {
 

@@ -1,11 +1,15 @@
-﻿using Pacagroup.Ecommerce.Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Pacagroup.Ecommerce.Domain.Interface
 {
+    using Pacagroup.Ecommerce.Domain.Entity;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ICustomersDomain
     {
         #region Sincronos
