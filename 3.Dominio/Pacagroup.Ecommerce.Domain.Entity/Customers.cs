@@ -1,6 +1,6 @@
 ﻿namespace Pacagroup.Ecommerce.Domain.Entity
 {
-    public class Custumers
+    public class Customers
     {
         public string CustomerId { get; set; }
         public string CompanyName { get; set; }

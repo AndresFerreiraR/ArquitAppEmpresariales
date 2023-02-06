@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace Pacagroup.Ecommerce.Infraestructure.Repository
 {
-    public class CustomerRepository : ICustomersRepository
+    public class CustomersRepository : ICustomersRepository
     {
         private readonly IConnectionFactory _connectionFactory;
 
 
-        public CustomerRepository(IConnectionFactory connectionFactory)
+        public CustomersRepository(IConnectionFactory connectionFactory)
         {
             this._connectionFactory = connectionFactory;
         }
 
         #region Sincronos
-        public bool Insert(Custumers customers)
+        public bool Insert(Customers customers)
         {
             using(var connection = _connectionFactory.GetConnection)
             {
@@ -43,7 +43,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result > 0;
             }
         }
-        public bool Update(Custumers customers)
+        public bool Update(Customers customers)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -79,7 +79,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result > 0;
             }
         }
-        public Custumers Get(string customerId)
+        public Customers Get(string customerId)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -88,18 +88,18 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
 
                 parameters.Add("CustomerID", customerId);
 
-                var result = connection.QuerySingle<Custumers>(query, param: parameters, commandType: CommandType.StoredProcedure);
+                var result = connection.QuerySingle<Customers>(query, param: parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
-        public IEnumerable<Custumers> GetAll()
+        public IEnumerable<Customers> GetAll()
         {
             //CustomersList
             using (var connection = _connectionFactory.GetConnection)
             {
                 var query = "CustomersList";
 
-                var result = connection.Query<Custumers>(query, commandType: CommandType.StoredProcedure);
+                var result = connection.Query<Customers>(query, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
@@ -109,7 +109,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
         #region Asincronos
 
 
-        public async Task<bool> InsertAsync(Custumers customers)
+        public async Task<bool> InsertAsync(Customers customers)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -132,7 +132,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result > 0;
             }
         }
-        public async Task<bool> UpdateAsync(Custumers customers)
+        public async Task<bool> UpdateAsync(Customers customers)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -169,7 +169,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
-        public async Task<Custumers> GetAsync(string customerId)
+        public async Task<Customers> GetAsync(string customerId)
         {
             using (var connection = _connectionFactory.GetConnection)
             {
@@ -178,19 +178,19 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
 
                 parameters.Add("CustomerID", customerId);
 
-                var result = await connection.QuerySingleAsync<Custumers>(query, param: parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.QuerySingleAsync<Customers>(query, param: parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
             
         }
 
-        public async Task<IEnumerable<Custumers>> GetAllAsync()
+        public async Task<IEnumerable<Customers>> GetAllAsync()
         {
             using (var connection = _connectionFactory.GetConnection)
             {
                 var query = "CustomersList";
 
-                var result = await connection.QueryAsync<Custumers>(query, commandType: CommandType.StoredProcedure);
+                var result = await connection.QueryAsync<Customers>(query, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }

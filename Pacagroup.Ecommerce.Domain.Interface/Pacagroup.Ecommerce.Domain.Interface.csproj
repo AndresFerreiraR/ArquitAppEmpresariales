@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Custumers.cs~RF4c9316.TMP" />
+    <ProjectReference Include="..\3.Dominio\Pacagroup.Ecommerce.Domain.Entity\Pacagroup.Ecommerce.Domain.Entity.csproj" />
   </ItemGroup>
 
 </Project>
