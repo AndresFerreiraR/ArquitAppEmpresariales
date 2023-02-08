@@ -260,7 +260,7 @@ namespace Pacagroup.Ecommerce.Application.Main
             var response = new Response<CustomersDto>();
             try
             {
-                var customer = await _customersDomain.GetAsync(customerId); 
+                var customer = await _customersDomain.GetAsync(customerId);
                 response.Data = _mapper.Map<CustomersDto>(customer);
 
                 if (response.Data != null)

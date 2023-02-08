@@ -39,7 +39,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
         /// <returns></returns>
         public bool Insert(Customers customers)
         {
-            using(var connection = _connectionFactory.GetConnection)
+            using (var connection = _connectionFactory.GetConnection)
             {
                 var query = "CustomersInsert";
                 var parameters = new DynamicParameters();
@@ -103,7 +103,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 var parameters = new DynamicParameters();
 
                 parameters.Add("CustomerID", customerId);
-                
+
                 var result = connection.Execute(query, param: parameters, commandType: CommandType.StoredProcedure);
                 return result > 0;
             }
@@ -242,7 +242,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 var result = await connection.QuerySingleAsync<Customers>(query, param: parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
-            
+
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result;
             }
         }
-        
+
 
         #endregion
     }
