@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Pacagroup.Ecommerce.Services.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController._customersApplication">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.#ctor(Pacagroup.Ecommerce.Application.Interface.ICustomersApplication)">
+            <summary>
+            
+            </summary>
+            <param name="customersApplication"></param>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.Insert(Pacagroup.Ecommerce.Application.DTO.CustomersDto)">
+            <summary>
+            
+            </summary>
+            <param name="customersDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.Update(Pacagroup.Ecommerce.Application.DTO.CustomersDto)">
+            <summary>
+            
+            </summary>
+            <param name="customersDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.Delete(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.Get(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.GetAll">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.InsertAsync(Pacagroup.Ecommerce.Application.DTO.CustomersDto)">
+            <summary>
+            
+            </summary>
+            <param name="customersDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.UpdateAsync(Pacagroup.Ecommerce.Application.DTO.CustomersDto)">
+            <summary>
+            
+            </summary>
+            <param name="customersDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.DeleteAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.GetAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="customerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.CustomersController.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
