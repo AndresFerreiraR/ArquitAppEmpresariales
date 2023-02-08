@@ -1,25 +1,42 @@
-﻿using Dapper;
-using Pacagroup.Ecommerce.Domain.Entity;
-using Pacagroup.Ecommerce.Infraestructure.Interface;
-using Pacagroup.Ecommerce.Transversal.Common;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Threading.Tasks;
-
+﻿
 namespace Pacagroup.Ecommerce.Infraestructure.Repository
 {
+    using Dapper;
+    using Pacagroup.Ecommerce.Domain.Entity;
+    using Pacagroup.Ecommerce.Infraestructure.Interface;
+    using Pacagroup.Ecommerce.Transversal.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class CustomersRepository : ICustomersRepository
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly IConnectionFactory _connectionFactory;
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connectionFactory"></param>
         public CustomersRepository(IConnectionFactory connectionFactory)
         {
             this._connectionFactory = connectionFactory;
         }
 
         #region Sincronos
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customers"></param>
+        /// <returns></returns>
         public bool Insert(Customers customers)
         {
             using(var connection = _connectionFactory.GetConnection)
@@ -43,6 +60,12 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result > 0;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customers"></param>
+        /// <returns></returns>
         public bool Update(Customers customers)
         {
             using (var connection = _connectionFactory.GetConnection)
@@ -66,6 +89,12 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result > 0;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         public bool Delete(string customerId)
         {
             using (var connection = _connectionFactory.GetConnection)
@@ -79,6 +108,12 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result > 0;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         public Customers Get(string customerId)
         {
             using (var connection = _connectionFactory.GetConnection)
@@ -92,6 +127,11 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Customers> GetAll()
         {
             //CustomersList
@@ -108,7 +148,11 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
 
         #region Asincronos
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customers"></param>
+        /// <returns></returns>
         public async Task<bool> InsertAsync(Customers customers)
         {
             using (var connection = _connectionFactory.GetConnection)
@@ -132,6 +176,12 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result > 0;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customers"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateAsync(Customers customers)
         {
             using (var connection = _connectionFactory.GetConnection)
@@ -155,6 +205,12 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
                 return result > 0;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         public async Task<bool> DeleteAsync(string customerId)
         {
             using (var connection = _connectionFactory.GetConnection)
@@ -169,6 +225,11 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         public async Task<Customers> GetAsync(string customerId)
         {
             using (var connection = _connectionFactory.GetConnection)
@@ -184,6 +245,10 @@ namespace Pacagroup.Ecommerce.Infraestructure.Repository
             
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Customers>> GetAllAsync()
         {
             using (var connection = _connectionFactory.GetConnection)

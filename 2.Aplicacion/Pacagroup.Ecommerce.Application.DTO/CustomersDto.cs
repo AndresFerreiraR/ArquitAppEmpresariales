@@ -1,9 +1,12 @@
-﻿namespace Pacagroup.Ecommerce.Domain.Entity
+﻿
+namespace Pacagroup.Ecommerce.Application.DTO
 {
+    using System;
+
     /// <summary>
     /// 
     /// </summary>
-    public class Customers
+    public class CustomersDto
     {
         /// <summary>
         /// 

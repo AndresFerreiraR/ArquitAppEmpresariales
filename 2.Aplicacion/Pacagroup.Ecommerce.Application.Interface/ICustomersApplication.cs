@@ -1,14 +1,15 @@
 ﻿
-namespace Pacagroup.Ecommerce.Infraestructure.Interface
+namespace Pacagroup.Ecommerce.Application.Interface
 {
-    using Pacagroup.Ecommerce.Domain.Entity;
+    using Pacagroup.Ecommerce.Application.DTO;
+    using Pacagroup.Ecommerce.Transversal.Common;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     /// <summary>
     /// 
     /// </summary>
-    public interface ICustomersRepository
+    public interface ICustomersApplication
     {
         #region Sincronos
 
@@ -17,34 +18,34 @@ namespace Pacagroup.Ecommerce.Infraestructure.Interface
         /// </summary>
         /// <param name="customers"></param>
         /// <returns></returns>
-        bool Insert(Customers customers);
+        Response<bool> Insert(CustomersDto customersDto);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="customers"></param>
         /// <returns></returns>
-        bool Update(Customers customers);
+        Response<bool> Update(CustomersDto customersDto);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        bool Delete(string customerId);
+        Response<bool> Delete(string customerId);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        Customers Get(string customerId);
+        Response<CustomersDto> Get(string customerId);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Customers> GetAll();
+        Response<IEnumerable<CustomersDto>> GetAll();
 
         #endregion
 
@@ -55,34 +56,34 @@ namespace Pacagroup.Ecommerce.Infraestructure.Interface
         /// </summary>
         /// <param name="customers"></param>
         /// <returns></returns>
-        Task<bool> InsertAsync(Customers customers);
+        Task<Response<bool>> InsertAsync(CustomersDto customersDto);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="customers"></param>
         /// <returns></returns>
-        Task<bool> UpdateAsync(Customers customers);
+        Task<Response<bool>> UpdateAsync(CustomersDto customersDto);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(string customerId);
+        Task<Response<bool>> DeleteAsync(string customerId);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        Task<Customers> GetAsync(string customerId);
+        Task<Response<CustomersDto>> GetAsync(string customerId);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<Customers>> GetAllAsync();
+        Task<Response<IEnumerable<CustomersDto>>> GetAllAsync();
 
         #endregion
     }
