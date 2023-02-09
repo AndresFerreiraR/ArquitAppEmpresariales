@@ -29,6 +29,8 @@ namespace Pacagroup.Ecommerce.Services.WebApi
 
     public class Startup
     {
+
+        private string myPolicy = "policyApiEcomerce";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,6 +42,14 @@ namespace Pacagroup.Ecommerce.Services.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(x => x.AddProfile(new MappingsProfile()));
+
+            // CORS
+            services.AddCors(opt =>
+                             opt.AddPolicy(myPolicy, bld =>
+                                                     bld.WithOrigins(Configuration["Config:OriginCors"])
+                                                        .AllowAnyHeader()
+                                                        .AllowAnyMethod()));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver(); });
 
@@ -93,7 +103,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API ECommerce V1");
             });
-
+            app.UseCors(myPolicy);
             app.UseMvc();
         }
     }
