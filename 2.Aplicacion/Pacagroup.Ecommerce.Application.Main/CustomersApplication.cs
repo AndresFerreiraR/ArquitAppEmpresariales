@@ -26,6 +26,11 @@ namespace Pacagroup.Ecommerce.Application.Main
         /// <summary>
         /// 
         /// </summary>
+        private readonly IAppLogger<CustomersApplication> _logger;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly IMapper _mapper;
 
         /// <summary>
@@ -33,10 +38,11 @@ namespace Pacagroup.Ecommerce.Application.Main
         /// </summary>
         /// <param name="_customersDomain"></param>
         /// <param name="_mapper"></param>
-        public CustomersApplication(ICustomersDomain _customersDomain, IMapper _mapper)
+        public CustomersApplication(ICustomersDomain _customersDomain, IMapper _mapper, IAppLogger<CustomersApplication> logger)
         {
             this._customersDomain = _customersDomain;
             this._mapper = _mapper;
+            this._logger = logger;
         }
 
         #region Sincronos
@@ -159,12 +165,14 @@ namespace Pacagroup.Ecommerce.Application.Main
                 {
                     response.IsSuccess = true;
                     response.Message = "Consulta Exitosa!";
+                    _logger.LogInformation("Conulta exitosa!!");
                 }
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
                 response.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
             return response;
         }

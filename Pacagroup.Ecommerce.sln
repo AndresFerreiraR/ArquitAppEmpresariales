@@ -35,7 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pacagroup.Ecommerce.Applica
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pacagroup.Ecommerce.Application.Main", "2.Aplicacion\Pacagroup.Ecommerce.Application.Main\Pacagroup.Ecommerce.Application.Main.csproj", "{38DB1DE5-0C7A-4460-91F5-699A00C1A7A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pacagroup.Ecommerce.Services.WebApi", "1.Servicio\Pacagroup.Ecommerce.Services.WebApi\Pacagroup.Ecommerce.Services.WebApi.csproj", "{2F92604B-C197-4973-AB1C-4FE2A6961A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pacagroup.Ecommerce.Services.WebApi", "1.Servicio\Pacagroup.Ecommerce.Services.WebApi\Pacagroup.Ecommerce.Services.WebApi.csproj", "{2F92604B-C197-4973-AB1C-4FE2A6961A44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pacagroup.Ecommerce.Transversal.Logging", "5.Transversales\Pacagroup.Ecommerce.Transversal.Logging\Pacagroup.Ecommerce.Transversal.Logging.csproj", "{218E545F-EE28-426C-841F-D712A5E0B397}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{2F92604B-C197-4973-AB1C-4FE2A6961A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F92604B-C197-4973-AB1C-4FE2A6961A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F92604B-C197-4973-AB1C-4FE2A6961A44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{218E545F-EE28-426C-841F-D712A5E0B397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{218E545F-EE28-426C-841F-D712A5E0B397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{218E545F-EE28-426C-841F-D712A5E0B397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{218E545F-EE28-426C-841F-D712A5E0B397}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +114,7 @@ Global
 		{D33EC5FA-8DA1-4665-8925-9E6C85AFF6E9} = {324AC4BD-CFF2-4AAC-A160-0485A43CEFEF}
 		{38DB1DE5-0C7A-4460-91F5-699A00C1A7A2} = {324AC4BD-CFF2-4AAC-A160-0485A43CEFEF}
 		{2F92604B-C197-4973-AB1C-4FE2A6961A44} = {B3A153FE-B0D4-4DBF-AB84-48E90E59746D}
+		{218E545F-EE28-426C-841F-D712A5E0B397} = {466BFCF4-C18F-4FA5-B211-6202B9901957}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E27BC07D-01B9-46FD-961B-B0F32FBACABA}
