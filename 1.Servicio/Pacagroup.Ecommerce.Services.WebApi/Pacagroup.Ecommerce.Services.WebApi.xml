@@ -88,5 +88,37 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Controllers.UsersController.BuildToken(Pacagroup.Ecommerce.Transversal.Common.Response{Pacagroup.Ecommerce.Application.DTO.UsersDto})">
+            <summary>
+            
+            </summary>
+            <param name="usersDto"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Pacagroup.Ecommerce.Services.WebApi.Helpers.AppSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Pacagroup.Ecommerce.Services.WebApi.Helpers.AppSettings.OriginCors">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Pacagroup.Ecommerce.Services.WebApi.Helpers.AppSettings.Secret">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Pacagroup.Ecommerce.Services.WebApi.Helpers.AppSettings.Issuer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Pacagroup.Ecommerce.Services.WebApi.Helpers.AppSettings.Audience">
+            <summary>
+            
+            </summary>
+        </member>
     </members>
 </doc>

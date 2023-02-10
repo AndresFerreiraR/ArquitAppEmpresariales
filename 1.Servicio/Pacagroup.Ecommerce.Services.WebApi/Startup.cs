@@ -2,6 +2,7 @@
 namespace Pacagroup.Ecommerce.Services.WebApi
 {
     using AutoMapper;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Tokens;
     using Pacagroup.Ecommerce.Application.Interface;
     using Pacagroup.Ecommerce.Application.Main;
     using Pacagroup.Ecommerce.Domain.Core;
@@ -16,6 +18,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi
     using Pacagroup.Ecommerce.Infraestructure.Data;
     using Pacagroup.Ecommerce.Infraestructure.Interface;
     using Pacagroup.Ecommerce.Infraestructure.Repository;
+    using Pacagroup.Ecommerce.Services.WebApi.Helpers;
     using Pacagroup.Ecommerce.Transversal.Common;
     using Pacagroup.Ecommerce.Transversal.Mapper;
     using Swashbuckle.AspNetCore.Swagger;
@@ -24,6 +27,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Text;
     using System.Threading.Tasks;
 
 
@@ -53,6 +57,11 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver(); });
 
+            var appSettingsSection = Configuration.GetSection("Config");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettigs = appSettingsSection.Get<AppSettings>();
+
             // Instancia del IConfiguration para traer el appsettings.Json
             services.AddSingleton<IConfiguration>(Configuration);
 
@@ -61,6 +70,52 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             services.AddScoped<ICustomersApplication, CustomersApplication>();
             services.AddScoped<ICustomersDomain, CustomersDomain>();
             services.AddScoped<ICustomersRepository, CustomersRepository>();
+            services.AddScoped<IUsersDomain, UsersDomain>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IUsersApplication, UsersApplication>();
+
+            var key = Encoding.ASCII.GetBytes(appSettigs.Secret);
+            var issuer = appSettigs.Issuer;
+            var audience = appSettigs.Audience;
+
+            // Agregar autenticacion al API
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var userId = int.Parse(context.Principal.Identity.Name);
+                        return Task.CompletedTask;
+                    },
+
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = false;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidIssuer = issuer,
+                    ValidateAudience = true,
+                    ValidAudience = audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
 
             // Configuracion Swagger
             services.AddSwaggerGen(c =>
@@ -85,7 +140,20 @@ namespace Pacagroup.Ecommerce.Services.WebApi
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
+                c.AddSecurityDefinition("Authorization", new ApiKeyScheme
+                {
+                    Description = "Authorization by API key",
+                    In = "header",
+                    Type = "apiKey",
+                    Name = "Authorization"
+                });
+
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Authorization", new string[0] }
+                });
             });
         }
 
@@ -104,6 +172,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API ECommerce V1");
             });
             app.UseCors(myPolicy);
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

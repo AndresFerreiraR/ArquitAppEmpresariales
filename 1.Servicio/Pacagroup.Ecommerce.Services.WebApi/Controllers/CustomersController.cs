@@ -1,6 +1,7 @@
 ﻿
 namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Pacagroup.Ecommerce.Application.DTO;
     using Pacagroup.Ecommerce.Application.Interface;
@@ -9,6 +10,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
     /// <summary>
     /// 
     /// </summary>
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class CustomersController : ControllerBase
