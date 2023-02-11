@@ -11,7 +11,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
     /// 
     /// </summary>
     [Authorize]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
     {
@@ -36,7 +36,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// </summary>
         /// <param name="customersDto"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("Insert")]
         public IActionResult Insert([FromBody] CustomersDto customersDto)
         {
             if(customersDto == null)
@@ -57,7 +57,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// </summary>
         /// <param name="customersDto"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("Update")]
         public IActionResult Update([FromBody] CustomersDto customersDto)
         {
             if (customersDto == null)
@@ -78,7 +78,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        [HttpDelete("{customerId}")]
+        [HttpDelete("Delete/{customerId}")]
         public IActionResult Delete(string customerId)
         {
             if (string.IsNullOrEmpty(customerId))
@@ -99,7 +99,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        [HttpGet("{customerId}")]
+        [HttpGet("Get/{customerId}")]
         public IActionResult Get(string customerId)
         {
             if (string.IsNullOrEmpty(customerId))
@@ -119,7 +119,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             var response = _customersApplication.GetAll();
@@ -140,7 +140,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// </summary>
         /// <param name="customersDto"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("InsertAsync")]
         public async Task<IActionResult> InsertAsync([FromBody] CustomersDto customersDto)
         {
             if (customersDto == null)
@@ -161,7 +161,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// </summary>
         /// <param name="customersDto"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("UpdateAsync")]
         public async Task<IActionResult> UpdateAsync([FromBody] CustomersDto customersDto)
         {
             if (customersDto == null)
@@ -182,7 +182,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        [HttpDelete("{customerId}")]
+        [HttpDelete("DeleteAsync/{customerId}")]
         public async Task<IActionResult> DeleteAsync(string customerId)
         {
             if (string.IsNullOrEmpty(customerId))
@@ -203,7 +203,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// </summary>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        [HttpGet("{customerId}")]
+        [HttpGet("GetAsync/{customerId}")]
         public async Task<IActionResult> GetAsync(string customerId)
         {
             if (string.IsNullOrEmpty(customerId))
@@ -223,7 +223,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("GetAllAsync")]
         public async Task<IActionResult> GetAllAsync()
         {
             var response = await _customersApplication.GetAllAsync();

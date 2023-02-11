@@ -17,6 +17,7 @@
         public MappingsProfile()
         {
             CreateMap<Customers, CustomersDto>().ReverseMap();
+            CreateMap<Users, UsersDto>().ReverseMap();
 
             //CreateMap<Customers, CustomersDto>().ReverseMap()
             //    .ForMember(d => d.CustomerId, s => s.MapFrom(src => src.CustomerId))

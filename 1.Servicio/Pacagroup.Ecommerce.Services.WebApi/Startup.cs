@@ -4,7 +4,6 @@ namespace Pacagroup.Ecommerce.Services.WebApi
     using AutoMapper;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +29,9 @@ namespace Pacagroup.Ecommerce.Services.WebApi
     using System.Reflection;
     using System.Text;
     using System.Threading.Tasks;
-
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.OpenApi.Models;
 
     public class Startup
     {
@@ -46,7 +47,13 @@ namespace Pacagroup.Ecommerce.Services.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(x => x.AddProfile(new MappingsProfile()));
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingsProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             // CORS
             services.AddCors(opt =>
@@ -55,8 +62,7 @@ namespace Pacagroup.Ecommerce.Services.WebApi
                                                         .AllowAnyHeader()
                                                         .AllowAnyMethod()));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver(); });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             var appSettingsSection = Configuration.GetSection("Config");
             services.Configure<AppSettings>(appSettingsSection);
@@ -122,50 +128,62 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             // Configuracion Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "Pacagroup Technology Service API Market",
                     Description = "A simple example .Net Core Project with DDD",
-                    TermsOfService = "None",
-                    Contact = new Contact
+                    TermsOfService = new Uri("https://example.com/license"),
+                    Contact = new OpenApiContact
                     {
                         Email = "ac.ferreira.r@gmail.com",
                         Name = "Andres Ferreira",
-                        Url = "https://github.com/AndresFerreiraR/ArquitAppEmpresariales.git"
+                        Url = new Uri("https://github.com/AndresFerreiraR/ArquitAppEmpresariales.git")
                     },
-                    License = new License
+                    License = new OpenApiLicense
                     {
                         Name = "IMIT",
-                        Url = "https://example.com/license"
+                        Url = new Uri("https://example.com/license")
                     }
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
 
-                c.AddSecurityDefinition("Authorization", new ApiKeyScheme
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "Authorization by API key",
-                    In = "header",
-                    Type = "apiKey",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
                     Name = "Authorization"
                 });
 
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    {"Authorization", new string[0] }
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]{ }
+                    }
                 });
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseRouting();
 
             app.UseSwagger();
 
@@ -175,7 +193,12 @@ namespace Pacagroup.Ecommerce.Services.WebApi
             });
             app.UseCors(myPolicy);
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
