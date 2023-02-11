@@ -120,5 +120,56 @@
             
             </summary>
         </member>
+        <member name="T:Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication.AuthenticationExtension">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication.AuthenticationExtension.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Pacagroup.Ecommerce.Services.WebApi.Modules.Feature.FeactureExtension">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Modules.Feature.FeactureExtension.AddFeacture(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Pacagroup.Ecommerce.Services.WebApi.Modules.Injection.InjectionExtension">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Modules.Injection.InjectionExtension.AddInjection(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger.SwaggerExtension">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger.SwaggerExtension.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

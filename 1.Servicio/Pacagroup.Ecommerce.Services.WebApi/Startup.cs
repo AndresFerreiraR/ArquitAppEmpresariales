@@ -32,11 +32,16 @@ namespace Pacagroup.Ecommerce.Services.WebApi
     using Microsoft.Extensions.Hosting;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.OpenApi.Models;
+    using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
+    using Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication;
+    using Pacagroup.Ecommerce.Services.WebApi.Modules.Mapper;
+    using Pacagroup.Ecommerce.Services.WebApi.Modules.Feature;
+    using Pacagroup.Ecommerce.Services.WebApi.Modules.Injection;
 
     public class Startup
     {
 
-        private string myPolicy = "policyApiEcomerce";
+        private readonly string myPolicy = "policyApiEcomerce";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -47,132 +52,16 @@ namespace Pacagroup.Ecommerce.Services.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingsProfile());
-            });
-
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
+            services.AddMapper();
             // CORS
-            services.AddCors(opt =>
-                             opt.AddPolicy(myPolicy, bld =>
-                                                     bld.WithOrigins(Configuration["Config:OriginCors"])
-                                                        .AllowAnyHeader()
-                                                        .AllowAnyMethod()));
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
-            var appSettingsSection = Configuration.GetSection("Config");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            var appSettigs = appSettingsSection.Get<AppSettings>();
-
+            services.AddFeacture(this.Configuration);
             // Instancia del IConfiguration para traer el appsettings.Json
-            services.AddSingleton<IConfiguration>(Configuration);
-
             // Inyecion de dependencias de las interfaces y clases que las implementan
-            services.AddSingleton<IConnectionFactory, ConnectionFactory>();
-            services.AddScoped<ICustomersApplication, CustomersApplication>();
-            services.AddScoped<ICustomersDomain, CustomersDomain>();
-            services.AddScoped<ICustomersRepository, CustomersRepository>();
-            services.AddScoped<IUsersDomain, UsersDomain>();
-            services.AddScoped<IUsersRepository, UsersRepository>();
-            services.AddScoped<IUsersApplication, UsersApplication>();
-            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-
-            var key = Encoding.ASCII.GetBytes(appSettigs.Secret);
-            var issuer = appSettigs.Issuer;
-            var audience = appSettigs.Audience;
-
+            services.AddInjection(this.Configuration);
             // Agregar autenticacion al API
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
-            {
-                x.Events = new JwtBearerEvents
-                {
-                    OnTokenValidated = context =>
-                    {
-                        var userId = int.Parse(context.Principal.Identity.Name);
-                        return Task.CompletedTask;
-                    },
-
-                    OnAuthenticationFailed = context =>
-                    {
-                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                        {
-                            context.Response.Headers.Add("Token-Expired", "true");
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = false;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = true,
-                    ValidIssuer = issuer,
-                    ValidateAudience = true,
-                    ValidAudience = audience,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
-                };
-            });
-
+            services.AddAuthentication(this.Configuration);
             // Configuracion Swagger
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "Pacagroup Technology Service API Market",
-                    Description = "A simple example .Net Core Project with DDD",
-                    TermsOfService = new Uri("https://example.com/license"),
-                    Contact = new OpenApiContact
-                    {
-                        Email = "ac.ferreira.r@gmail.com",
-                        Name = "Andres Ferreira",
-                        Url = new Uri("https://github.com/AndresFerreiraR/ArquitAppEmpresariales.git")
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "IMIT",
-                        Url = new Uri("https://example.com/license")
-                    }
-                });
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "Authorization by API key",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Name = "Authorization"
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[]{ }
-                    }
-                });
-            });
+            services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
