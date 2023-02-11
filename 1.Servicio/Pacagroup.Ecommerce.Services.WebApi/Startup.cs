@@ -1,42 +1,16 @@
 ﻿
 namespace Pacagroup.Ecommerce.Services.WebApi
 {
-    using AutoMapper;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
-    using Microsoft.IdentityModel.Tokens;
-    using Pacagroup.Ecommerce.Application.Interface;
-    using Pacagroup.Ecommerce.Application.Main;
-    using Pacagroup.Ecommerce.Domain.Core;
-    using Pacagroup.Ecommerce.Domain.Interface;
-    using Pacagroup.Ecommerce.Infraestructure.Data;
-    using Pacagroup.Ecommerce.Infraestructure.Interface;
-    using Pacagroup.Ecommerce.Infraestructure.Repository;
-    using Pacagroup.Ecommerce.Services.WebApi.Helpers;
-    using Pacagroup.Ecommerce.Transversal.Common;
-    using Pacagroup.Ecommerce.Transversal.Logging;
-    using Pacagroup.Ecommerce.Transversal.Mapper;
-    using Swashbuckle.AspNetCore.Swagger;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
-    using System.Threading.Tasks;
     using Microsoft.Extensions.Hosting;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.OpenApi.Models;
-    using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
     using Pacagroup.Ecommerce.Services.WebApi.Modules.Authentication;
-    using Pacagroup.Ecommerce.Services.WebApi.Modules.Mapper;
     using Pacagroup.Ecommerce.Services.WebApi.Modules.Feature;
     using Pacagroup.Ecommerce.Services.WebApi.Modules.Injection;
+    using Pacagroup.Ecommerce.Services.WebApi.Modules.Mapper;
+    using Pacagroup.Ecommerce.Services.WebApi.Modules.Swagger;
 
     public class Startup
     {
