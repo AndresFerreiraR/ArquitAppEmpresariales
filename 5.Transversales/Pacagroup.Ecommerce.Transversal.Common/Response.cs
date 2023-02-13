@@ -1,4 +1,7 @@
-﻿namespace Pacagroup.Ecommerce.Transversal.Common
+﻿using FluentValidation.Results;
+using System.Collections.Generic;
+
+namespace Pacagroup.Ecommerce.Transversal.Common
 {
 
     /// <summary>
@@ -21,5 +24,10 @@
         /// 
         /// </summary>
         public string Message { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IEnumerable<ValidationFailure> Errors { get; set; }
     }
 }

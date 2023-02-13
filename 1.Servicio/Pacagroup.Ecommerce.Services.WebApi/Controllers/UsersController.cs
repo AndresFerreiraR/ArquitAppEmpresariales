@@ -42,13 +42,11 @@ namespace Pacagroup.Ecommerce.Services.WebApi.Controllers
                 }
                 else
                 {
-                    return NotFound(response.Message);
+                    return NotFound(response);
                 }
-
-                return Ok(response);
             }
 
-            return BadRequest(response.Message);
+            return BadRequest(response);
         }
 
         /// <summary>
